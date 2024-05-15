@@ -1,0 +1,13 @@
+pragma cashscript >= 0.8.0;
+
+contract NftMarketplace(pubkey seller, int price) {
+    function buy() {
+        bytes20 sellerPkh = hash160(seller);
+        bytes sellerLockingBytecode = new LockingBytecodeP2PKH(sellerPkh);
+
+        console.log('seller', seller, sellerPkh, sellerLockingBytecode);
+
+        require(tx.outputs[0].lockingBytecode == sellerLockingBytecode, "Wrong seller address");
+        require(tx.outputs[0].value == price, "Didn't pay enough");
+    }
+}

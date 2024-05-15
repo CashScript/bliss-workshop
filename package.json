@@ -1,0 +1,13 @@
+{
+  "name": "bliss-workshop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:CashScript/bliss-workshop.git",
+  "author": "Rosco Kalis <roscokalis@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@bitauth/libauth": "^3.0.0",
+    "cashscript": "^0.10.0-next.4"
+  },
+  "type": "module"
+}

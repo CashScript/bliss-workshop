@@ -1,0 +1,63 @@
+{
+  "contractName": "NftMarketplace",
+  "constructorInputs": [
+    {
+      "name": "seller",
+      "type": "pubkey"
+    },
+    {
+      "name": "price",
+      "type": "int"
+    }
+  ],
+  "abi": [
+    {
+      "name": "buy",
+      "inputs": []
+    }
+  ],
+  "bytecode": "OP_DUP OP_HASH160 76a914 OP_OVER OP_CAT 88ac OP_CAT OP_0 OP_OUTPUTBYTECODE OP_EQUALVERIFY OP_0 OP_OUTPUTVALUE OP_3 OP_ROLL OP_NUMEQUAL OP_NIP OP_NIP",
+  "source": "pragma cashscript >= 0.8.0;\n\ncontract NftMarketplace(pubkey seller, int price) {\n    function buy() {\n        bytes20 sellerPkh = hash160(seller);\n        bytes sellerLockingBytecode = new LockingBytecodeP2PKH(sellerPkh);\n\n        console.log('seller', seller, sellerPkh, sellerLockingBytecode);\n\n        require(tx.outputs[0].lockingBytecode == sellerLockingBytecode, \"Wrong seller address\");\n        require(tx.outputs[0].value == price, \"Didn't pay enough\");\n    }\n}\n",
+  "debug": {
+    "bytecode": "0079a90376a91451797e0288ac7e00cd517a876900cc537a9c7777",
+    "sourceMap": "5:36:5:42;;:28::43:1;6:38:6:73:0;:63::72;;:38::73;;;10:27:10:28;:16::45;:49::70;;:16:::1;:8::96;11:27:11:28:0;:16::35;:39::44;;:16:::1;4:4:12:5;",
+    "logs": [
+      {
+        "ip": 11,
+        "line": 8,
+        "data": [
+          "seller",
+          {
+            "stackIndex": 2,
+            "type": "pubkey"
+          },
+          {
+            "stackIndex": 1,
+            "type": "bytes20 sellerPkh"
+          },
+          {
+            "stackIndex": 0,
+            "type": "bytes sellerLockingBytecode"
+          }
+        ]
+      }
+    ],
+    "requireMessages": [
+      {
+        "ip": 17,
+        "line": 10,
+        "message": "Wrong seller address"
+      },
+      {
+        "ip": 23,
+        "line": 11,
+        "message": "Didn't pay enough"
+      }
+    ]
+  },
+  "compiler": {
+    "name": "cashc",
+    "version": "0.10.0-next.4"
+  },
+  "updatedAt": "2024-05-15T21:41:58.129Z"
+}
